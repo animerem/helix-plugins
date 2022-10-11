@@ -3,6 +3,10 @@ local freelooking, LookX, LookY, InitialAng, CoolAng, ZeroAngle = false, 0, 0, A
 concommand.Add("+freelook", function(ply, cmd, args) freelooking = true end)
 concommand.Add("-freelook", function(ply, cmd, args) freelooking = false end)
 
+local function freelookcheck()
+    return ix.option.Get("FreelookEnabled", true) and ix.config.Get("FreelookEnabled", true)
+end
+
 local function isinsights(ply) -- arccw, arc9, tfa, mgbase
     local weapon = ply:GetActiveWeapon()
     return ix.config.Get("FreelookBlockADS", true) and (ply:KeyDown(IN_ATTACK2) or (weapon.GetInSights and weapon:GetInSights()) or (weapon.ArcCW and weapon:GetState() == ArcCW.STATE_SIGHTS) or (weapon.GetIronSights and weapon:GetIronSights()))
@@ -18,7 +22,7 @@ end
 
 hook.Add("CalcView", "FreelookView", function(ply, origin, angles, fov)
     if !ply:GetCharacter() then return end
-    if !ix.config.Get("FreelookEnabled", true) then return end
+    if !freelookcheck() then return end
 
     local smoothness = math.Clamp(ix.config.Get("FreelookSmooth", 1), 0.1, 2)
 
@@ -40,7 +44,7 @@ end)
 hook.Add("CalcViewModelView", "FreelookVM", function(wep, vm, oPos, oAng, pos, ang)
     local lp = LocalPlayer()
     if !lp:GetCharacter() then return end
-    if !ix.config.Get("FreelookEnabled", true) then return end
+    if !freelookcheck() then return end
 
     local MWBased = wep.m_AimModeDeltaVelocity and -1.5 or 1
 
@@ -51,7 +55,7 @@ end)
 hook.Add("InputMouseApply", "FreelookMouse", function(cmd, x, y, ang)
     local lp = LocalPlayer()
     if !lp:GetCharacter() then return end
-    if !ix.config.Get("FreelookEnabled", true) then return end
+    if !freelookcheck() then return end
 
     if not holdingbind(lp) or isinsights(lp) or lp:ShouldDrawLocalPlayer() then LookX, LookY = 0, 0 return end
     
