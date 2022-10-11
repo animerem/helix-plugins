@@ -5,12 +5,12 @@ PLUGIN.author = "Rem & Darsu"
 PLUGIN.description = "Creates rotations like in Rust, Tarkov, etc."
 
 ix.lang.AddTable("english", {
-	optFreelookEnabled = "Turn on Freelook",
+    optFreelookEnabled = "Turn on Freelook",
     optdFreelookEnabled = "Enable or disable free look"
 })
 
 ix.lang.AddTable("russian", {
-	optFreelookEnabled = "Включить свободный взгляд",
+    optFreelookEnabled = "Включить свободный взгляд",
     optdFreelookEnabled = "Включить или отключить свободную камеру"
 })
 
